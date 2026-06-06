@@ -45,7 +45,7 @@ npm run start:prod
 
 Una vez corriendo el servidor, acceder a:
 
-👉 **http://localhost:3000/api-docs**
+👉 **http://localhost:3000/api**
 
 ## Endpoints disponibles
 

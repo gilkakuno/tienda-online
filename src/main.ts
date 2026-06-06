@@ -30,9 +30,8 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
 
-  // Scalar API Reference (misma versión del ZIP de referencia)
   app.use(
-    '/api-docs',
+    '/api',
     apiReference({
       spec: {
         content: document,
@@ -40,8 +39,9 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000);
-  console.log('🚀 Servidor corriendo en: http://localhost:3000');
-  console.log('📚 Documentación Scalar en: http://localhost:3000/api-docs');
+  const port = process.env.PORT || 3000;
+  await app.listen(port, '0.0.0.0');
+  console.log(`🚀 Servidor corriendo en: http://localhost:${port}`);
+  console.log(`📚 Documentación Scalar en: http://localhost:${port}/api`);
 }
 bootstrap();

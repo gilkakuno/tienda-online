@@ -16,7 +16,7 @@ export class OrdenProductoService {
     private readonly ordenRepo: Repository<Orden>,
     @InjectRepository(Producto)
     private readonly productoRepo: Repository<Producto>,
-  ) {}
+  ) { }
 
   async create(createOrdenProductoDto: CreateOrdenProductoDto): Promise<OrdenProducto> {
     const orden = await this.ordenRepo.findOneBy({ idOrden: createOrdenProductoDto.idOrden });
@@ -32,7 +32,6 @@ export class OrdenProductoService {
     const ordenProducto = this.ordenProductoRepo.create(createOrdenProductoDto);
     const saved = await this.ordenProductoRepo.save(ordenProducto);
 
-    // Actualizar total de la orden
     const items = await this.ordenProductoRepo.find({ where: { idOrden: orden.idOrden } });
     const nuevoTotal = items.reduce((acc, item) => acc + Number(item.precio_unitario) * item.cantidad, 0);
     await this.ordenRepo.update(orden.idOrden, { total: nuevoTotal });
@@ -60,7 +59,6 @@ export class OrdenProductoService {
     Object.assign(op, updateOrdenProductoDto);
     const saved = await this.ordenProductoRepo.save(op);
 
-    // Actualizar total de la orden
     const items = await this.ordenProductoRepo.find({ where: { idOrden: op.idOrden } });
     const nuevoTotal = items.reduce((acc, item) => acc + Number(item.precio_unitario) * item.cantidad, 0);
     await this.ordenRepo.update(op.idOrden, { total: nuevoTotal });
@@ -77,7 +75,6 @@ export class OrdenProductoService {
     }
     await this.ordenProductoRepo.softRemove(op);
 
-    // Actualizar total de la orden
     const items = await this.ordenProductoRepo.find({ where: { idOrden: ordenId } });
     const nuevoTotal = items.reduce((acc, item) => acc + Number(item.precio_unitario) * item.cantidad, 0);
     await this.ordenRepo.update(ordenId, { total: nuevoTotal });
