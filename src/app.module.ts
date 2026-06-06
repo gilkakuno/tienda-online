@@ -21,6 +21,14 @@ import { OrdenProductoModule } from './orden-producto/orden-producto.module';
       database: process.env.DB_NAME || 'tienda_online',
       autoLoadEntities: true,
       synchronize: true,
+      // Configuración de SSL condicional: activa SSL en Render y lo desactiva en tu computadora local
+      extra: process.env.DB_HOST
+        ? {
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        }
+        : undefined,
     }),
     ClientesModule,
     CategoriasModule,
